@@ -3,9 +3,9 @@ import pandas as pd
 import joblib
 import time
 
-# ---------------- 페이지 설정 ----------------
+# ---------------- 설정 ----------------
 st.set_page_config(
-    page_title="SMART FARM AI",
+    page_title="Smart Farm AI",
     page_icon="🍅",
     layout="wide"
 )
@@ -14,20 +14,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* 전체 배경 */
-.stApp {
-    background:
-    linear-gradient(to bottom,
-    #87CEEB 0%,
-    #b8ecff 25%,
-    #78c850 25%,
-    #4c9a2a 45%,
-    #6d4420 45%,
-    #3d2412 100%);
-    overflow-x: hidden;
-}
-
-/* ===== 상단 흰 바 제거 ===== */
+/* 상단바 제거 */
 header {
     visibility: hidden;
 }
@@ -40,72 +27,174 @@ header {
     display: none;
 }
 
-[data-testid="stStatusWidget"] {
-    display: none;
+/* 전체 배경 */
+.stApp {
+    background: linear-gradient(to bottom, #eefbf3, #dff5e7);
 }
 
-/* 메인 컨테이너 */
+/* 메인 */
 .block-container {
-    padding-top: 1rem;
+    padding-top: 1.5rem;
 }
 
 /* 제목 */
 .main-title {
     text-align: center;
-    font-size: 72px;
-    font-weight: 900;
-    color: white;
-    letter-spacing: 4px;
+    font-size: 64px;
+    font-weight: 800;
+    color: #1b4332;
 
-    animation: titleGlow 2s infinite alternate;
-
-    text-shadow:
-    0 0 10px rgba(255,255,255,0.6),
-    0 0 20px rgba(0,255,100,0.7),
-    0 0 40px rgba(0,255,100,0.9);
-}
-
-/* 제목 애니메이션 */
-@keyframes titleGlow {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.02);
-    }
+    animation: fadeIn 1s ease;
 }
 
 /* 부제목 */
 .sub-title {
     text-align: center;
-    font-size: 24px;
-    color: white;
-    margin-bottom: 40px;
-    animation: fadeUp 1.2s ease;
+    font-size: 22px;
+    color: #52796f;
+    margin-bottom: 45px;
+
+    animation: fadeIn 1.5s ease;
 }
 
 /* 카드 */
-.glass-card {
+.card {
 
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.75);
 
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(10px);
 
-    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 28px;
 
     padding: 35px;
 
-    border-radius: 30px;
-
     box-shadow:
-    0 8px 32px rgba(0,0,0,0.35);
+    0 8px 30px rgba(0,0,0,0.08);
 
-    animation: fadeUp 1s ease;
+    border: 1px solid rgba(255,255,255,0.4);
+
+    animation: slideUp 0.8s ease;
 }
 
-/* 등장 애니메이션 */
-@keyframes fadeUp {
+/* 카드 hover */
+.card:hover {
+
+    transform: translateY(-3px);
+
+    transition: 0.3s;
+}
+
+/* 섹션 제목 */
+.section-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1b4332;
+    margin-bottom: 20px;
+}
+
+/* 슬라이더 */
+.stSlider > div > div > div > div {
+    background: linear-gradient(90deg,#52b788,#74c69d);
+}
+
+/* 슬라이더 글씨 */
+label {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #2d6a4f !important;
+}
+
+/* 버튼 */
+.stButton > button {
+
+    width: 100%;
+
+    height: 68px;
+
+    border-radius: 18px;
+
+    border: none;
+
+    background: linear-gradient(90deg,#40916c,#52b788);
+
+    color: white;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    transition: 0.3s;
+
+    box-shadow:
+    0 8px 20px rgba(82,183,136,0.25);
+}
+
+/* 버튼 hover */
+.stButton > button:hover {
+
+    transform: scale(1.02);
+
+    background: linear-gradient(90deg,#2d6a4f,#40916c);
+}
+
+/* metric 카드 */
+[data-testid="metric-container"] {
+
+    background: rgba(255,255,255,0.6);
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    box-shadow:
+    0 5px 18px rgba(0,0,0,0.06);
+}
+
+/* 결과 카드 */
+.result-card {
+
+    margin-top: 35px;
+
+    padding: 45px;
+
+    border-radius: 30px;
+
+    background:
+    linear-gradient(135deg,#40916c,#74c69d);
+
+    text-align: center;
+
+    color: white;
+
+    animation: pop 0.6s ease;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* 결과 숫자 */
+.result-number {
+
+    font-size: 82px;
+
+    font-weight: 900;
+
+    margin-top: 10px;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
 
     from {
         opacity: 0;
@@ -118,149 +207,23 @@ header {
     }
 }
 
-/* 섹션 제목 */
-.section-title {
-    font-size: 34px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 25px;
-}
-
-/* 슬라이더 색 */
-.stSlider > div > div > div > div {
-    background: linear-gradient(90deg,#00ff88,#00d4ff);
-}
-
-/* 슬라이더 숫자 */
-.stSlider label {
-    color: white !important;
-    font-size: 20px !important;
-    font-weight: bold !important;
-}
-
-/* 버튼 */
-.stButton > button {
-
-    width: 100%;
-
-    height: 75px;
-
-    border-radius: 20px;
-
-    border: none;
-
-    font-size: 28px;
-
-    font-weight: bold;
-
-    color: white;
-
-    background: linear-gradient(90deg,#00c853,#00e676);
-
-    box-shadow:
-    0 0 15px rgba(0,255,100,0.6),
-    0 0 35px rgba(0,255,100,0.5);
-
-    transition: all 0.3s ease;
-}
-
-/* 버튼 호버 */
-.stButton > button:hover {
-
-    transform: translateY(-5px) scale(1.02);
-
-    box-shadow:
-    0 0 25px rgba(0,255,100,0.9),
-    0 0 50px rgba(0,255,100,0.8);
-
-    background: linear-gradient(90deg,#00e676,#76ff03);
-}
-
-/* metric 카드 */
-[data-testid="metric-container"] {
-
-    background: rgba(255,255,255,0.1);
-
-    border-radius: 20px;
-
-    padding: 20px;
-
-    box-shadow:
-    0 5px 20px rgba(0,0,0,0.2);
-
-    animation: pulse 2s infinite;
-}
-
-/* metric 애니메이션 */
-@keyframes pulse {
+@keyframes pop {
 
     0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.03);
+        transform: scale(0.8);
+        opacity: 0;
     }
 
     100% {
         transform: scale(1);
+        opacity: 1;
     }
-}
-
-/* 결과 카드 */
-.result-card {
-
-    margin-top: 40px;
-
-    background:
-    linear-gradient(135deg,#ff512f,#dd2476);
-
-    padding: 50px;
-
-    border-radius: 35px;
-
-    text-align: center;
-
-    color: white;
-
-    animation: resultGlow 1.5s infinite alternate;
-
-    box-shadow:
-    0 0 20px rgba(255,0,100,0.6),
-    0 0 50px rgba(255,0,100,0.7);
-}
-
-/* 결과 glow */
-@keyframes resultGlow {
-
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.02);
-    }
-}
-
-/* 결과 숫자 */
-.result-number {
-
-    font-size: 90px;
-
-    font-weight: 900;
-
-    margin-top: 15px;
-}
-
-/* 스크롤바 제거 */
-::-webkit-scrollbar {
-    display: none;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- 모델 로드 ----------------
+# ---------------- 모델 ----------------
 rf_model = joblib.load("tomato_model.pkl")
 
 # ---------------- 제목 ----------------
@@ -270,17 +233,17 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="sub-title">차세대 AI 기반 토마토 착과율 예측 시스템</div>',
+    '<div class="sub-title">AI 기반 토마토 착과율 예측 시스템</div>',
     unsafe_allow_html=True
 )
 
 # ---------------- 레이아웃 ----------------
-left, right = st.columns([1.3, 1])
+left, right = st.columns([1.2, 1])
 
-# ---------------- 왼쪽 ----------------
+# ---------------- 입력 ----------------
 with left:
 
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+    st.markdown('<div class="card">', unsafe_allow_html=True)
 
     st.markdown(
         '<div class="section-title">🌱 환경 데이터 입력</div>',
@@ -299,13 +262,13 @@ with left:
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ---------------- 오른쪽 ----------------
+# ---------------- 상태창 ----------------
 with right:
 
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+    st.markdown('<div class="card">', unsafe_allow_html=True)
 
     st.markdown(
-        '<div class="section-title">📊 실시간 환경 상태</div>',
+        '<div class="section-title">📊 실시간 상태</div>',
         unsafe_allow_html=True
     )
 
@@ -324,9 +287,8 @@ with right:
 # ---------------- 예측 ----------------
 if predict_btn:
 
-    # 로딩 애니메이션
-    with st.spinner("🤖 AI가 환경을 분석중입니다..."):
-        time.sleep(2)
+    with st.spinner("AI 분석 중..."):
+        time.sleep(1.5)
 
     input_data = pd.DataFrame(
         [[temp, humidity, soil_temp]],
@@ -336,31 +298,23 @@ if predict_btn:
     predicted = rf_model.predict(input_data)
 
     st.markdown(
-        f"""
+        f'''
         <div class="result-card">
-
-            🍅 AI 예측 착과율
-
+            🍅 예측 착과율
             <div class="result-number">
                 {predicted[0]:.1f}%
             </div>
-
         </div>
-        """,
+        ''',
         unsafe_allow_html=True
     )
 
-    # 상태 메시지
     if predicted[0] >= 85:
-
-        st.success("🌟 최적의 스마트팜 환경입니다!")
-
+        st.success("🌟 최적의 생육 환경입니다!")
         st.balloons()
 
     elif predicted[0] >= 65:
-
-        st.info("👍 양호한 생육 환경입니다.")
+        st.info("👍 양호한 환경 상태입니다.")
 
     else:
-
         st.warning("⚠️ 환경 조절이 필요합니다.")
